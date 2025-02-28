@@ -82,7 +82,17 @@ function handleEvaluation() {
 		return;
 
 	// Perform the calculation
-	result = operate(operator, firstOperand, secondOperand);
+	try {
+		result = operate(operator, firstOperand, secondOperand);
+	} catch (error) {
+		updateDisplay("Math Error");
+		currentInput = "";
+		firstOperand = null;
+		secondOperand = null;
+		operator = null;
+		result = null;
+		return;
+	}
 
 	// Update display and prepare for next input
 	updateDisplay(result);
@@ -97,7 +107,10 @@ function handleEvaluation() {
  * Handles backspace by removing the last character of the current input.
  */
 function handleBackspace() {
-	if (currentInput === "") return;
+	if (currentInput === "") {
+		updateDisplay("");
+		return;
+	}
 
 	currentInput = currentInput.slice(0, -1);
 	updateDisplay(currentInput);
