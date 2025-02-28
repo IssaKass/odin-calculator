@@ -55,7 +55,7 @@ function handleNumber(value) {
  */
 function handleOperator(value) {
 	// Ignore if no number is present
-	if (currentInput === "") return;
+	if (currentInput === "" && result === null) return;
 
 	if (firstOperand === null) {
 		firstOperand = parseFloat(currentInput);
@@ -84,6 +84,12 @@ function handleEvaluation() {
 	// Perform the calculation
 	try {
 		result = operate(operator, firstOperand, secondOperand);
+		updateDisplay(result);
+
+		currentInput = "";
+		firstOperand = result;
+		secondOperand = null;
+		operator = null;
 	} catch (error) {
 		updateDisplay("Math Error");
 		currentInput = "";
@@ -91,29 +97,15 @@ function handleEvaluation() {
 		secondOperand = null;
 		operator = null;
 		result = null;
-		return;
 	}
-
-	// Update display and prepare for next input
-	updateDisplay(result);
-
-	currentInput = String(result);
-	firstOperand = null;
-	secondOperand = null;
-	operator = null;
 }
 
 /**
  * Handles backspace by removing the last character of the current input.
  */
 function handleBackspace() {
-	if (currentInput === "") {
-		updateDisplay("");
-		return;
-	}
-
 	currentInput = currentInput.slice(0, -1);
-	updateDisplay(currentInput);
+	updateDisplay(currentInput || "0");
 }
 
 /**
@@ -126,7 +118,7 @@ function handleClear() {
 	operator = null;
 	result = null;
 
-	updateDisplay("");
+	updateDisplay("0");
 }
 
 /**
