@@ -13,30 +13,38 @@
 		<link rel="stylesheet" href="./style.css" />
 	</head>
 	<body>
-		<div class="calculator">
-			<div class="calculator__display">0</div>
-			<div class="calculator__body">
-				<button data-value="backspace" class="calculator__button">DEL</button>
-				<button data-value="clear" class="calculator__button">C</button>
-				<button data-value="%" class="calculator__button">%</button>
-				<button data-value="/" class="calculator__button">÷</button>
-				<button data-value="7" class="calculator__button">7</button>
-				<button data-value="8" class="calculator__button">8</button>
-				<button data-value="9" class="calculator__button">9</button>
-				<button data-value="*" class="calculator__button">x</button>
-				<button data-value="4" class="calculator__button">4</button>
-				<button data-value="5" class="calculator__button">5</button>
-				<button data-value="6" class="calculator__button">6</button>
-				<button data-value="-" class="calculator__button">-</button>
-				<button data-value="1" class="calculator__button">1</button>
-				<button data-value="2" class="calculator__button">2</button>
-				<button data-value="3" class="calculator__button">3</button>
-				<button data-value="+" class="calculator__button plus">+</button>
-				<button data-value="0" class="calculator__button">0</button>
-				<button data-value="." class="calculator__button">.</button>
-				<button data-value="=" class="calculator__button">=</button>
+		<main>
+			<div class="calculator">
+				<div class="calculator__display">0</div>
+				<div class="calculator__body">
+					<button data-value="clear" class="calculator__button clear">C</button>
+					<button data-value="backspace" class="calculator__button">DEL</button>
+					<button data-value="negate" class="calculator__button">
+						<sup>+</sup>/-
+					</button>
+					<button data-value="/" class="calculator__button">÷</button>
+					<button data-value="7" class="calculator__button">7</button>
+					<button data-value="8" class="calculator__button">8</button>
+					<button data-value="9" class="calculator__button">9</button>
+					<button data-value="*" class="calculator__button">x</button>
+					<button data-value="4" class="calculator__button">4</button>
+					<button data-value="5" class="calculator__button">5</button>
+					<button data-value="6" class="calculator__button">6</button>
+					<button data-value="-" class="calculator__button">-</button>
+					<button data-value="1" class="calculator__button">1</button>
+					<button data-value="2" class="calculator__button">2</button>
+					<button data-value="3" class="calculator__button">3</button>
+					<button data-value="+" class="calculator__button plus">+</button>
+					<button data-value="0" class="calculator__button">0</button>
+					<button data-value="." class="calculator__button">.</button>
+					<button data-value="=" class="calculator__button">=</button>
+				</div>
 			</div>
-		</div>
+		</main>
+		<footer>
+			&copy; 2025 <strong>The Odin Project</strong>. Made with ❤️ by
+			<a href="https://github.com/issakass/" target="_blank">IssaKass</a>
+		</footer>
 		<script src="./main.js"></script>
 	</body>
 </html>

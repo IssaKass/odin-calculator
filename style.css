@@ -12,6 +12,7 @@
 	--rad: 0.75rem;
 
 	--bg: hsl(150, 50%, 90%);
+	--text: hsl(150, 50%, 30%);
 }
 
 html {
@@ -20,10 +21,15 @@ html {
 
 body {
 	background: var(--bg);
+
 	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	grid-template-rows: 1fr auto;
+}
+
+main {
+	display: grid;
+	place-items: center;
 }
 
 .calculator {
@@ -41,6 +47,8 @@ body {
 	border-radius: var(--rad);
 	padding: 0.75rem;
 	overflow: hidden;
+
+	animation: fade-in 1s ease;
 }
 
 .calculator__display {
@@ -75,4 +83,20 @@ body {
 
 .plus {
 	grid-row: span 2;
+}
+
+footer {
+	text-align: center;
+	padding: 1rem;
+}
+
+@keyframes fade-in {
+	from {
+		transform: translateY(-3rem);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
