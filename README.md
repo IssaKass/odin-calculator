@@ -57,7 +57,8 @@ You can view and use the live calculator by clicking the link below:
 ## 🔮 Future Features
 
 - [ ] Themes and color scheme customization
-- [ ] Enable keyboard input for calculations (number keys, operators, etc.)
+- [x] Enable keyboard input for calculations (number keys, operators, etc.)
+- [ ] Visually indicate when a calculator button is "clicked" upon keypress
 
 ## 🛠️ Contributing
 

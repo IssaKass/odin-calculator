@@ -13,22 +13,38 @@ let secondOperand = null;
 let operator = null;
 
 // ---- Event Listeners ----
+document.addEventListener("DOMContentLoaded", handleClear);
+
 calculatorBody.addEventListener("click", function (event) {
 	const button = event.target.closest("BUTTON");
 	if (button) handleButtonClick(button.dataset.value);
 });
 
-document.addEventListener("DOMContentLoaded", handleClear);
+window.addEventListener("keydown", handleKeyboardInput);
 
 // ---- Handle Button Click ----
 function handleButtonClick(value) {
 	if (!isNaN(value)) handleNumber(value);
 	else if (value === ".") handleDecimalPoint();
+	else if (value === "negate") handleNegation();
 	else if (OPERATORS.includes(value)) handleOperation(value);
 	else if (value === "=") handleEvaluation();
 	else if (value === "clear") handleClear();
 	else if (value === "backspace") handleBackspace();
-	else if (value === "negate") handleNegation();
+}
+
+// ---- Handle Keyboard Input ----
+function handleKeyboardInput(event) {
+	event.preventDefault();
+
+	if (event.key >= 0 && event.key <= 9) handleNumber(event.key);
+	else if (event.key === ".") handleDecimalPoint();
+	else if (event.altKey && event.code === "Minus") handleNegation();
+	else if (OPERATORS.includes(event.key)) handleOperation(event.key);
+	else if (event.key === "=" || event.key === "Enter") handleEvaluation();
+	else if (event.key === "Escape" || event.key === "c" || event.key === "C")
+		handleClear();
+	else if (event.key === "Backspace") handleBackspace();
 }
 
 // ---- Handle Number Input ----
@@ -42,7 +58,12 @@ function handleNumber(digit) {
 	// Prevent multiple leading zeros
 	if (input === "0" && digit === "0") return;
 
-	input += digit;
+	if (input === "0") {
+		input = digit;
+	} else {
+		input += digit;
+	}
+
 	updateDisplay(input);
 }
 
@@ -89,7 +110,7 @@ function handleOperation(operation) {
 		handleEvaluation();
 	}
 
-	input = "";
+	input = "0";
 	operator = operation;
 }
 
@@ -110,8 +131,8 @@ function handleEvaluation() {
 		operator = null;
 	} catch (error) {
 		// Handle errors like division by zero
-		updateDisplay("Math Error");
 		resetCalculator();
+		updateDisplay("Math Error");
 	}
 }
 
@@ -120,13 +141,17 @@ function handleBackspace() {
 	// Remove last character and update display
 	input = input.slice(0, -1) || "0";
 
+	if (firstOperand !== null) firstOperand = parseFloat(input);
+
+	if (input === "-") input = "0";
+
 	updateDisplay(input);
 }
 
 // ---- Handle Clear ----
 function handleClear() {
 	resetCalculator();
-	updateDisplay("");
+	updateDisplay("0");
 }
 
 // ---- Reset Calculator State ----
@@ -137,20 +162,7 @@ function resetCalculator() {
 
 // ---- Update Display ----
 function updateDisplay(text) {
-	if (isNaN(text)) {
-		calculatorDisplay.textContent = text;
-		return;
-	}
-
-	const formattedOutput = new Intl.NumberFormat("en", {
-		minimumFractionDigits: 0,
-		maximumFractionDigits: FRACTION_DIGITS,
-		useGrouping: true,
-		style: "decimal",
-		signDisplay: "auto",
-	}).format(text);
-
-	calculatorDisplay.textContent = formattedOutput;
+	calculatorDisplay.textContent = text;
 }
 
 // ---- Math Operations ----
