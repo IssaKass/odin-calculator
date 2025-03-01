@@ -4,15 +4,32 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	font-family: "Poppins", serif;
 }
 
 :root {
 	--hue: 200;
 	--saturation: 50%;
 
+	/*  */
+	--font-family: "Poppins", serif;
+
+	/*  */
+	--spacing: 0.5rem;
+	--rad: 0.75rem;
+
+	/*  */
+	--button-size: 50px;
+
+	/*  */
+	--transition-duration: 150ms;
+}
+
+[data-theme="light"] {
 	--bg: hsl(var(--hue), var(--saturation), 95%);
 	--text: hsl(var(--hue), var(--saturation), 0%);
+
+	--link: var(--text);
+	--link-visited: hsl(var(--hue), var(--saturation), 50%);
 
 	--calculator_bg: hsl(var(--hue), var(--saturation), 80%);
 
@@ -23,13 +40,24 @@
 	--button-color: hsl(var(--hue), var(--saturation), 0%);
 	--button-active-bg: hsl(var(--hue), var(--saturation), 90%);
 	--button-active-color: var(--button-color);
+}
 
-	/*  */
-	--spacing: 0.5rem;
-	--rad: 0.75rem;
+[data-theme="dark"] {
+	--bg: hsl(var(--hue), var(--saturation), 10%);
+	--text: hsl(var(--hue), var(--saturation), 100%);
 
-	/*  */
-	--button-size: 50px;
+	--link: var(--text);
+	--link-visited: hsl(var(--hue), var(--saturation), 80%);
+
+	--calculator_bg: hsl(var(--hue), var(--saturation), 25%);
+
+	--display-bg: hsl(var(--hue), var(--saturation), 10%);
+	--display-color: hsl(var(--hue), var(--saturation), 100%);
+
+	--button-bg: hsl(var(--hue), var(--saturation), 10%);
+	--button-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 20%);
+	--button-active-color: var(--button-color);
 }
 
 html {
@@ -37,12 +65,39 @@ html {
 }
 
 body {
+	font-family: var(--font-family);
+
 	background: var(--bg);
 	color: var(--text);
 
 	height: 100vh;
 	display: grid;
 	grid-template-rows: 1fr auto;
+}
+
+a {
+	color: var(--link);
+}
+
+a:visited {
+	color: var(--link-visited);
+}
+
+button {
+	font-family: var(--font-family);
+	cursor: pointer;
+}
+
+.toggle-theme-button {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	width: 40px;
+	height: 40px;
+	border: none;
+	border-radius: 100vmax;
+	background-color: var(--text);
+	color: var(--bg);
 }
 
 main {
@@ -60,6 +115,7 @@ main {
 	padding: 0.75rem;
 	overflow: hidden;
 
+	transition-property: background-color;
 	animation: fade-in 1s ease;
 }
 
@@ -71,6 +127,8 @@ main {
 	padding: 0 1rem;
 	display: flex;
 	align-items: center;
+
+	transition-property: background-color;
 }
 
 .calculator__body {
@@ -88,9 +146,8 @@ main {
 	border-radius: var(--rad);
 	font-size: 1rem;
 	font-weight: bold;
-	cursor: pointer;
 
-	transition: all 250ms ease-in-out;
+	transition-property: transform, background-color, color;
 }
 
 .calculator__button:active {
@@ -113,11 +170,25 @@ main {
 	--button-active-color: var(--button-color);
 }
 
+[data-theme="dark"] .operator {
+	--button-bg: hsl(var(--hue), var(--saturation), 40%);
+	--button-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 50%);
+	--button-active-color: var(--button-color);
+}
+
 .equals {
 	--button-bg: hsl(var(--hue), var(--saturation), 25%);
 	--button-color: hsl(var(--hue), var(--saturation), 100%);
 	--button-active-bg: hsl(var(--hue), var(--saturation), 30%);
-	--button-active-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-color: var(--button-color);
+}
+
+[data-theme="dark"] .equals {
+	--button-bg: hsl(var(--hue), var(--saturation), 100%);
+	--button-color: hsl(var(--hue), var(--saturation), 10%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 90%);
+	--button-active-color: var(--button-color);
 }
 
 footer {
@@ -134,4 +205,10 @@ footer {
 		transform: translateY(0);
 		opacity: 1;
 	}
+}
+
+.calculator,
+.calculator__display {
+	transition-duration: var(--transition-duration);
+	transition-timing-function: ease-in-out;
 }

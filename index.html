@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Odin Calculator</title>
+		<script
+			src="https://kit.fontawesome.com/6a58196ab8.js"
+			crossorigin="anonymous"
+		></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -13,6 +17,9 @@
 		<link rel="stylesheet" href="./style.css" />
 	</head>
 	<body>
+		<button type="button" id="toggle-theme-button" class="toggle-theme-button">
+			<i class="fa-solid fa-moon fa-lg"></i>
+		</button>
 		<main>
 			<div class="calculator">
 				<div class="calculator__display"></div>
@@ -46,5 +53,6 @@
 			<a href="https://github.com/issakass/" target="_blank">IssaKass</a>
 		</footer>
 		<script src="./main.js"></script>
+		<script src="./theme.js"></script>
 	</body>
 </html>

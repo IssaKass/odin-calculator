@@ -37,8 +37,6 @@ function handleButtonClick(value) {
 
 // ---- Handle Keyboard Input ----
 function handleKeyboardInput(event) {
-	event.preventDefault();
-
 	if (event.key >= 0 && event.key <= 9) handleNumber(event.key);
 	else if (event.key === ".") handleDecimalPoint();
 	else if (event.altKey && event.code === "Minus") handleNegation();
