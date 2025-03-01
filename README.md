@@ -58,3 +58,10 @@ You can view and use the live calculator by clicking the link below:
 
 - [ ] Themes and color scheme customization
 - [ ] Enable keyboard input for calculations (number keys, operators, etc.)
+
+## 🛠️ Contributing
+
+Have a feature idea or found a bug? Let us know!
+
+- 📌 **[Request a Feature](https://github.com/issakass/odin-calculator/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=)**
+- 🐞 **[Report a Bug](https://github.com/issakass/odin-calculator/issues/new?assignees=&labels=bug&template=bug_report.md&title=)**
