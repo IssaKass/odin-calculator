@@ -53,3 +53,8 @@ You can view and use the live calculator by clicking the link below:
 2. Use `=` to get the result.
 3. Use `C` to clear all inputs or `DEL` to delete the last digit.
 4. Toggle between positive and negative values using `+/-`.
+
+## 🔮 Future Features
+
+- [ ] Themes and color scheme customization
+- [ ] Enable keyboard input for calculations (number keys, operators, etc.)
