@@ -27,6 +27,10 @@ You can view and use the live calculator by clicking the link below:
 - Negation (+/-): Toggles between positive and negative values.
 - Equal (=): Computes and displays the result.
 
+### 🎨 Themes and Customization
+
+- Light/Dark theme support, with color scheme customization.
+
 ### 📐 Precision & Formatting
 
 - Supports up to 6 decimal places for accurate calculations.
@@ -56,10 +60,7 @@ You can view and use the live calculator by clicking the link below:
 
 ## 🔮 Future Features
 
-- [x] Themes and color scheme customization
-- [x] Enable keyboard input for calculations (number keys, operators, etc.)
 - [ ] Visually indicate when a calculator button is "clicked" upon keypress
-- [ ] Support for Light/Dark themes
 
 ## 🛠️ Contributing
 
