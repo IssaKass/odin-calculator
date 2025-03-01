@@ -151,7 +151,8 @@ main {
 	transition-property: transform, background-color, color;
 }
 
-.calculator__button:active {
+.calculator__button:active,
+.calculator__button.active {
 	transform: scale(0.95);
 	background-color: var(--button-active-bg);
 	color: var(--button-active-color);

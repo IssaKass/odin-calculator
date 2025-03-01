@@ -12,7 +12,7 @@ You can view and use the live calculator by clicking the link below:
 
 ### 🧮 Basic Arithmetic Operations
 
-- Addition (`+`), Subtraction (`-`), Multiplication (`*`), and Division (`/`).
+- Addition (+), Subtraction (-), Multiplication (\*), and Division (/).
 - Supports decimal numbers and negative values.
 
 ### 🏗️ User-Friendly Interface
@@ -22,10 +22,14 @@ You can view and use the live calculator by clicking the link below:
 
 ### 🎛️ Functional Buttons
 
-- Clear (C): Resets the calculator.
-- Backspace (DEL): Deletes the last entered digit.
-- Negation (+/-): Toggles between positive and negative values.
-- Equal (=): Computes and displays the result.
+- Clear (`C`): Resets the calculator.
+- Backspace (`⌫`): Deletes the last entered digit.
+- Negation (`±`): Toggles between positive and negative values.
+- Equal (`=`): Computes and displays the result.
+
+### 🎹 Keyboard Support
+
+- Full keyboard support for calculations. You can use number keys (`0-9`), arithmetic operators (`+`, `-`, `*`, `/`), decimal point (`.`), negation (`Option/Alt` + `-`), equals (`=`), backspace (`Backspace`), and clear (`Escape`, `c`) keys.
 
 ### 🎨 Themes and Customization
 
@@ -42,6 +46,15 @@ You can view and use the live calculator by clicking the link below:
 - CSS
 - JavaScript
 
+## 📚 Resources
+
+- **Fonts Used**:
+
+  - [Google Fonts - Poppins](https://fonts.google.com/specimen/Poppins)
+
+- **Icons Used**:
+  - [FontAwesome](https://fontawesome.com/)
+
 ## 📂 Project Structure
 
 ```
@@ -55,12 +68,12 @@ You can view and use the live calculator by clicking the link below:
 
 1. Click on the number and operator buttons to input a calculation.
 2. Use `=` to get the result.
-3. Use `C` to clear all inputs or `DEL` to delete the last digit.
-4. Toggle between positive and negative values using `+/-`.
+3. Use `C` to clear all inputs or `⌫` to delete the last digit.
+4. Toggle between positive and negative values using `±`.
 
 ## 🔮 Future Features
 
-- [ ] Visually indicate when a calculator button is "clicked" upon keypress
+Nothing here now.
 
 ## 🛠️ Contributing
 

@@ -17,7 +17,10 @@ document.addEventListener("DOMContentLoaded", handleClear);
 
 calculatorBody.addEventListener("click", function (event) {
 	const button = event.target.closest("BUTTON");
-	if (button) handleButtonClick(button.dataset.value);
+	if (button) {
+		handleButtonClick(button.dataset.value);
+		activateButton(button);
+	}
 });
 
 window.addEventListener("keydown", handleKeyboardInput);
@@ -35,14 +38,28 @@ function handleButtonClick(value) {
 
 // ---- Handle Keyboard Input ----
 function handleKeyboardInput(event) {
-	if (event.key >= 0 && event.key <= 9) handleNumber(event.key);
-	else if (event.key === ".") handleDecimalPoint();
-	else if (event.altKey && event.code === "Minus") handleNegation();
-	else if (OPERATORS.includes(event.key)) handleOperation(event.key);
-	else if (event.key === "=" || event.key === "Enter") handleEvaluation();
-	else if (event.key === "Escape" || event.key === "c" || event.key === "C")
-		handleClear();
-	else if (event.key === "Backspace") handleBackspace();
+	if (event.key >= 0 && event.key <= 9) {
+		handleButtonClick(event.key);
+		activateButtonFromKey(event.key);
+	} else if (event.key === ".") {
+		handleButtonClick(event.key);
+		activateButtonFromKey(".");
+	} else if (event.altKey && event.code === "Minus") {
+		handleButtonClick("negate");
+		activateButtonFromKey("negate");
+	} else if (OPERATORS.includes(event.key)) {
+		handleButtonClick(event.key);
+		activateButtonFromKey(event.key);
+	} else if (event.key === "=" || event.key === "Enter") {
+		handleButtonClick("=");
+		activateButtonFromKey("=");
+	} else if (event.key === "Escape" || event.key === "c" || event.key === "C") {
+		handleButtonClick("clear");
+		activateButtonFromKey("clear");
+	} else if (event.key === "Backspace") {
+		handleButtonClick("backspace");
+		activateButtonFromKey("backspace");
+	}
 }
 
 // ---- Handle Number Input ----
@@ -163,6 +180,17 @@ function resetCalculator() {
 // ---- Update Display ----
 function updateDisplay(text) {
 	calculatorDisplay.textContent = text;
+}
+
+// ---- Activate Button ----
+function activateButtonFromKey(value) {
+	const button = document.querySelector(`[data-value="${value}"]`);
+	if (button) activateButton(button);
+}
+
+function activateButton(button) {
+	button.classList.add("active");
+	setTimeout(() => button.classList.remove("active"), 100);
 }
 
 // ---- Round ----
