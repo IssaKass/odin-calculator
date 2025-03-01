@@ -1,5 +1,3 @@
-// TODO: make sure '0' is added
-
 // ---- DOM Elements ----
 const calculatorDisplay = document.querySelector(".calculator__display");
 const calculatorBody = document.querySelector(".calculator__body");
@@ -9,7 +7,7 @@ const OPERATORS = ["+", "-", "*", "/"];
 const FRACTION_DIGITS = 6;
 
 // ---- Calculator State ----
-let input = "0";
+let input = "";
 let firstOperand = null;
 let secondOperand = null;
 let operator = null;
@@ -52,7 +50,7 @@ function handleNumber(digit) {
 	// Reset if no operator and result displayed
 	if (firstOperand !== null && operator === null) {
 		firstOperand = null;
-		input = "0";
+		input = "";
 	}
 
 	// Prevent multiple leading zeros
@@ -71,6 +69,8 @@ function handleNumber(digit) {
 function handleDecimalPoint() {
 	// Prevent multiple decimal points
 	if (input.includes(".")) return;
+
+	if (input === "") input = "0";
 
 	input += ".";
 	updateDisplay(input);
@@ -110,7 +110,7 @@ function handleOperation(operation) {
 		handleEvaluation();
 	}
 
-	input = "0";
+	input = "";
 	operator = operation;
 }
 
@@ -139,11 +139,11 @@ function handleEvaluation() {
 // ---- Handle Backspace ----
 function handleBackspace() {
 	// Remove last character and update display
-	input = input.slice(0, -1) || "0";
+	input = input.slice(0, -1);
 
 	if (firstOperand !== null) firstOperand = parseFloat(input);
 
-	if (input === "-") input = "0";
+	if (input === "-") input = "";
 
 	updateDisplay(input);
 }
@@ -151,12 +151,12 @@ function handleBackspace() {
 // ---- Handle Clear ----
 function handleClear() {
 	resetCalculator();
-	updateDisplay("0");
+	updateDisplay("");
 }
 
 // ---- Reset Calculator State ----
 function resetCalculator() {
-	input = "0";
+	input = "";
 	firstOperand = secondOperand = operator = null;
 }
 
