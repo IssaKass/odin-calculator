@@ -1,3 +1,5 @@
+// TODO: make sure '0' is added
+
 // ---- DOM Elements ----
 const calculatorDisplay = document.querySelector(".calculator__display");
 const calculatorBody = document.querySelector(".calculator__body");

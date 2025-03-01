@@ -11,19 +11,32 @@
 	--hue: 200;
 	--saturation: 50%;
 
-	--bg: hsl(var(--hue), var(--saturation), 90%);
-	--text: hsl(var(--hue), var(--saturation), 30%);
-	--calculator_bg: hsl(var(--hue), var(--saturation), 80%);
+	--bg: hsl(var(--hue), var(--saturation), 95%);
+	--text: hsl(var(--hue), var(--saturation), 0%);
+
+	--calculator_bg: hsl(var(--hue), var(--saturation), 90%);
+
 	--display-bg: hsl(var(--hue), var(--saturation), 100%);
 	--display-color: hsl(var(--hue), var(--saturation), 0%);
+
 	--button-bg: hsl(var(--hue), var(--saturation), 100%);
 	--button-color: hsl(var(--hue), var(--saturation), 0%);
-	--button-active-bg: hsl(var(--hue), var(--saturation), 96%);
 
+	--clear-bg: var(--button-bg);
+	--clear-color: hsl(0, 50%, 50%);
+
+	--operator-bg: hsl(var(--hue), var(--saturation), 75%);
+	--operator-color: hsl(var(--hue), var(--saturation), 0%);
+
+	--equals-bg: hsl(var(--hue), var(--saturation), 25%);
+	--equals-color: hsl(var(--hue), var(--saturation), 100%);
+
+	/*  */
 	--spacing: 0.5rem;
 	--rad: 0.75rem;
 
-	--button-size: 60px;
+	/*  */
+	--button-size: 50px;
 }
 
 html {
@@ -39,17 +52,6 @@ body {
 	grid-template-rows: 1fr auto;
 }
 
-body.dark {
-	--bg: hsl(var(--hue), var(--saturation), 10%);
-	--text: hsl(var(--hue), var(--saturation), 70%);
-	--calculator_bg: hsl(var(--hue), var(--saturation), 20%);
-	--display-bg: hsl(var(--hue), var(--saturation), 0%);
-	--display-color: hsl(var(--hue), var(--saturation), 100%);
-	--button-bg: hsl(var(--hue), var(--saturation), 0%);
-	--button-color: hsl(var(--hue), var(--saturation), 100%);
-	--button-active-bg: hsl(var(--hue), var(--saturation), 4%);
-}
-
 main {
 	display: grid;
 	place-items: center;
@@ -58,7 +60,7 @@ main {
 .calculator {
 	display: grid;
 	grid-template-rows: 60px 1fr;
-	gap: var(--spacing);
+	gap: calc(var(--spacing) * 2);
 
 	background: var(--calculator_bg);
 	border-radius: var(--rad);
@@ -91,17 +93,30 @@ main {
 	background-color: var(--button-bg);
 	color: var(--button-color);
 	border-radius: var(--rad);
+	font-size: 1rem;
+	font-weight: bold;
 	cursor: pointer;
-	font-size: 1.125rem;
 }
 
 .calculator__button:active {
 	transform: scale(0.975);
-	background-color: var(--button-active-bg);
+	filter: brightness(1.25);
 }
 
-.plus {
-	grid-row: span 2;
+.clear {
+	grid-column: span 2;
+	background-color: var(--clear-bg);
+	color: var(--clear-color);
+}
+
+.operator {
+	background-color: var(--operator-bg);
+	color: var(--operator-color);
+}
+
+.equals {
+	background-color: var(--equals-bg);
+	color: var(--equals-color);
 }
 
 footer {
