@@ -144,6 +144,7 @@ main {
 	background-color: var(--button-bg);
 	color: var(--button-color);
 	border-radius: var(--rad);
+
 	font-size: 1rem;
 	font-weight: bold;
 
