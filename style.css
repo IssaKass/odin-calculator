@@ -14,22 +14,15 @@
 	--bg: hsl(var(--hue), var(--saturation), 95%);
 	--text: hsl(var(--hue), var(--saturation), 0%);
 
-	--calculator_bg: hsl(var(--hue), var(--saturation), 90%);
+	--calculator_bg: hsl(var(--hue), var(--saturation), 80%);
 
 	--display-bg: hsl(var(--hue), var(--saturation), 100%);
 	--display-color: hsl(var(--hue), var(--saturation), 0%);
 
 	--button-bg: hsl(var(--hue), var(--saturation), 100%);
 	--button-color: hsl(var(--hue), var(--saturation), 0%);
-
-	--clear-bg: var(--button-bg);
-	--clear-color: hsl(0, 50%, 50%);
-
-	--operator-bg: hsl(var(--hue), var(--saturation), 75%);
-	--operator-color: hsl(var(--hue), var(--saturation), 0%);
-
-	--equals-bg: hsl(var(--hue), var(--saturation), 25%);
-	--equals-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 90%);
+	--button-active-color: var(--button-color);
 
 	/*  */
 	--spacing: 0.5rem;
@@ -96,27 +89,35 @@ main {
 	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;
+
+	transition: all 250ms ease-in-out;
 }
 
 .calculator__button:active {
-	transform: scale(0.975);
-	filter: brightness(1.25);
+	transform: scale(0.95);
+	background-color: var(--button-active-bg);
+	color: var(--button-active-color);
 }
 
 .clear {
+	--button-color: hsl(0, 50%, 50%);
+	--button-active-color: var(--button-color);
+
 	grid-column: span 2;
-	background-color: var(--clear-bg);
-	color: var(--clear-color);
 }
 
 .operator {
-	background-color: var(--operator-bg);
-	color: var(--operator-color);
+	--button-bg: hsl(var(--hue), var(--saturation), 50%);
+	--button-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 60%);
+	--button-active-color: var(--button-color);
 }
 
 .equals {
-	background-color: var(--equals-bg);
-	color: var(--equals-color);
+	--button-bg: hsl(var(--hue), var(--saturation), 25%);
+	--button-color: hsl(var(--hue), var(--saturation), 100%);
+	--button-active-bg: hsl(var(--hue), var(--saturation), 30%);
+	--button-active-color: hsl(var(--hue), var(--saturation), 100%);
 }
 
 footer {
