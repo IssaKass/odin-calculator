@@ -122,7 +122,7 @@ function handleEvaluation() {
 	secondOperand = parseFloat(input);
 
 	try {
-		const result = operate(operator, firstOperand, secondOperand);
+		const result = round(operate(operator, firstOperand, secondOperand));
 		updateDisplay(result);
 
 		input = String(result);
@@ -163,6 +163,11 @@ function resetCalculator() {
 // ---- Update Display ----
 function updateDisplay(text) {
 	calculatorDisplay.textContent = text;
+}
+
+// ---- Round ----
+function round(number, fractionDigits = FRACTION_DIGITS) {
+	return Number(number.toFixed(fractionDigits));
 }
 
 // ---- Math Operations ----
