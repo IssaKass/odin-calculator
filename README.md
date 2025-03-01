@@ -56,9 +56,10 @@ You can view and use the live calculator by clicking the link below:
 
 ## 🔮 Future Features
 
-- [ ] Themes and color scheme customization
+- [x] Themes and color scheme customization
 - [x] Enable keyboard input for calculations (number keys, operators, etc.)
 - [ ] Visually indicate when a calculator button is "clicked" upon keypress
+- [ ] Support for Light/Dark themes
 
 ## 🛠️ Contributing
 
