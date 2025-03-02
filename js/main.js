@@ -33,6 +33,7 @@ calculatorBody.addEventListener("click", function (event) {
 		event.stopPropagation();
 		handleButtonClick(button.dataset.value);
 		activateButton(button);
+		button.blur();
 	}
 });
 
