@@ -18,6 +18,7 @@ You can view and use the live calculator by clicking the link below:
 ### 🏗️ User-Friendly Interface
 
 - User-friendly interface designed for intuitive interaction and seamless usability.
+- Show a concise history of the previous calculation, clearly separated from the current input.
 - Clear display with formatted output for easy readability.
 
 ### 🎛️ Functional Buttons
