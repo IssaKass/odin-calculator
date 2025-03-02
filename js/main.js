@@ -10,6 +10,7 @@ const calculatorBody = document.querySelector(".calculator__body");
 
 // ---- Constants ----
 const OPERATORS = ["+", "-", "*", "/"];
+const MAX_LENGTH = Number.MAX_SAFE_INTEGER.toFixed().length;
 const expression = {
 	firstOperand: "",
 	operator: "",
@@ -81,6 +82,8 @@ function handleNumber(digit) {
 }
 
 function updateOperand(currentOperand, digit) {
+	if (currentOperand.length === MAX_LENGTH) return currentOperand;
+
 	// Replace leading zero with digit.
 	if (currentOperand === "0") return digit;
 

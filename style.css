@@ -18,9 +18,6 @@
 	--rad: 0.75rem;
 
 	/*  */
-	--button-size: 50px;
-
-	/*  */
 	--transition-duration: 150ms;
 }
 
@@ -106,13 +103,24 @@ main {
 }
 
 .calculator {
-	display: grid;
-	grid-template-rows: auto 1fr;
-	gap: calc(var(--spacing) * 2);
+	--rows: 5;
+	--columns: 4;
+	--gap: var(--spacing);
+	--button-size: 75px;
+	--padding: var(--spacing);
+
+	--calculator-width: calc(
+		(var(--columns) - 1) * var(--gap) + var(--columns) * var(--button-size)
+	);
+	--calculator-body-height: calc(
+		(var(--rows) - 1) * var(--gap) + var(--rows) * var(--button-size)
+	);
+
+	padding: var(--padding);
+	max-width: calc(var(--calculator-width) + var(--padding) * 2);
 
 	background: var(--calculator_bg);
 	border-radius: var(--rad);
-	padding: 0.75rem;
 	overflow: hidden;
 
 	transition-property: background-color;
@@ -137,13 +145,18 @@ main {
 
 .current-operation__display {
 	font-size: 1.75rem;
+	overflow-x: auto;
 }
 
 .calculator__body {
+	margin-top: var(--spacing);
+	width: var(--calculator-width);
+	height: var(--calculator-body-height);
+
 	display: grid;
-	grid-template-columns: repeat(4, var(--button-size));
-	grid-template-rows: repeat(5, var(--button-size));
-	gap: var(--spacing);
+	grid-template-columns: repeat(var(--columns), var(--button-size));
+	grid-template-rows: repeat(var(--rows), var(--button-size));
+	gap: var(--gap);
 }
 
 .calculator__button {
