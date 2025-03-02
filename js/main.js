@@ -5,18 +5,11 @@ const lastOperationDisplay = document.querySelector(".last-operation__display");
 const currentOperationDisplay = document.querySelector(
 	".current-operation__display"
 );
-
 const calculatorBody = document.querySelector(".calculator__body");
 
 // ---- Constants ----
 const OPERATORS = ["+", "-", "*", "/"];
 const MAX_LENGTH = Number.MAX_SAFE_INTEGER.toFixed().length;
-const expression = {
-	firstOperand: "",
-	operator: "",
-	secondOperand: "",
-};
-
 const operatorMap = {
 	"+": "+",
 	"-": "-",
@@ -24,13 +17,19 @@ const operatorMap = {
 	"/": "÷",
 };
 
+const expression = {
+	firstOperand: "",
+	operator: "",
+	secondOperand: "",
+};
+let shouldResetScreen = false;
+
 // ---- Event Listeners ----
 document.addEventListener("DOMContentLoaded", handleClear);
 
 calculatorBody.addEventListener("click", function (event) {
 	const button = event.target.closest("BUTTON");
 	if (button) {
-		event.stopPropagation();
 		handleButtonClick(button.dataset.value);
 		activateButton(button);
 		button.blur();
@@ -77,6 +76,11 @@ function handleKeyboardInput(event) {
 }
 
 function handleNumber(digit) {
+	if (shouldResetScreen) {
+		resetCalculator();
+		shouldResetScreen = false;
+	}
+
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateOperand(expression[targetOperand], digit);
 	updateCurrentOperationDisplay(expression[targetOperand]);
@@ -93,6 +97,11 @@ function updateOperand(currentOperand, digit) {
 }
 
 function handleDecimalPoint() {
+	if (shouldResetScreen) {
+		handleClear();
+		shouldResetScreen = false;
+	}
+
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateDecimal(expression[targetOperand]);
 	updateCurrentOperationDisplay(expression[targetOperand]);
@@ -136,6 +145,8 @@ function handleOperator(currentOperator) {
 		evaluateExpression();
 	}
 
+	if (shouldResetScreen) shouldResetScreen = false;
+
 	expression.operator = currentOperator;
 }
 
@@ -167,6 +178,7 @@ function evaluateExpression() {
 		expression.firstOperand = result.toString();
 		expression.operator = "";
 		expression.secondOperand = "";
+		shouldResetScreen = true;
 	} catch (error) {
 		handleClear();
 		updateCurrentOperationDisplay("Math Error");
@@ -188,12 +200,13 @@ function updateBackspace(currentOperand) {
 }
 
 function handleClear() {
-	resetExpression();
-	updateLastOperationDisplay(expression);
-	updateCurrentOperationDisplay();
+	resetCalculator();
+	clearLastOperationDisplay();
+	clearCurrentOperationDisplay();
+	shouldResetScreen = false;
 }
 
-function resetExpression() {
+function resetCalculator() {
 	expression.firstOperand = "";
 	expression.operator = "";
 	expression.secondOperand = "";
@@ -210,8 +223,16 @@ function updateLastOperationDisplay(expression, equals = false) {
 	lastOperationDisplay.textContent = text.trim();
 }
 
+function clearLastOperationDisplay() {
+	lastOperationDisplay.textContent = "";
+}
+
 function updateCurrentOperationDisplay(text = "") {
 	currentOperationDisplay.textContent = text || "0";
+}
+
+function clearCurrentOperationDisplay() {
+	currentOperationDisplay.textContent = "0";
 }
 
 function activateButtonFromKey(value) {
