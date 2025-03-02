@@ -1,7 +1,11 @@
 import { operate, round } from "./operations.js";
 
 // ---- DOM Elements ----
-const calculatorDisplay = document.querySelector(".calculator__display");
+const lastOperationDisplay = document.querySelector(".last-operation__display");
+const currentOperationDisplay = document.querySelector(
+	".current-operation__display"
+);
+
 const calculatorBody = document.querySelector(".calculator__body");
 
 // ---- Constants ----
@@ -12,12 +16,20 @@ const expression = {
 	secondOperand: "",
 };
 
+const operatorMap = {
+	"+": "+",
+	"-": "-",
+	"*": "x",
+	"/": "÷",
+};
+
 // ---- Event Listeners ----
 document.addEventListener("DOMContentLoaded", handleClear);
 
 calculatorBody.addEventListener("click", function (event) {
 	const button = event.target.closest("BUTTON");
 	if (button) {
+		event.stopPropagation();
 		handleButtonClick(button.dataset.value);
 		activateButton(button);
 	}
@@ -65,7 +77,7 @@ function handleKeyboardInput(event) {
 function handleNumber(digit) {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateOperand(expression[targetOperand], digit);
-	updateDisplay(expression[targetOperand]);
+	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
 function updateOperand(currentOperand, digit) {
@@ -79,7 +91,7 @@ function updateOperand(currentOperand, digit) {
 function handleDecimalPoint() {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateDecimal(expression[targetOperand]);
-	updateDisplay(expression[targetOperand]);
+	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
 function updateDecimal(currentOperand) {
@@ -96,7 +108,7 @@ function updateDecimal(currentOperand) {
 function handleNegation() {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateNegation(expression[targetOperand]);
-	updateDisplay(expression[targetOperand]);
+	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
 function updateNegation(currentOperand) {
@@ -113,6 +125,8 @@ function updateNegation(currentOperand) {
 
 function handleOperator(currentOperator) {
 	if (expression.firstOperand === "") return;
+
+	updateLastOperationDisplay({ ...expression, operator: currentOperator });
 
 	if (expression.secondOperand !== "") {
 		evaluateExpression();
@@ -143,21 +157,22 @@ function evaluateExpression() {
 			)
 		);
 
+		updateLastOperationDisplay(expression, true);
+		updateCurrentOperationDisplay(result);
+
 		expression.firstOperand = result.toString();
 		expression.operator = "";
 		expression.secondOperand = "";
-
-		updateDisplay(expression.firstOperand);
 	} catch (error) {
-		updateDisplay("Math Error");
-		resetExpression();
+		handleClear();
+		updateCurrentOperationDisplay("Math Error");
 	}
 }
 
 function handleBackspace() {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateBackspace(expression[targetOperand]);
-	updateDisplay(expression[targetOperand]);
+	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
 function updateBackspace(currentOperand) {
@@ -170,7 +185,8 @@ function updateBackspace(currentOperand) {
 
 function handleClear() {
 	resetExpression();
-	updateDisplay();
+	updateLastOperationDisplay(expression);
+	updateCurrentOperationDisplay();
 }
 
 function resetExpression() {
@@ -179,8 +195,19 @@ function resetExpression() {
 	expression.secondOperand = "";
 }
 
-function updateDisplay(text) {
-	calculatorDisplay.textContent = text || "0";
+function updateLastOperationDisplay(expression, equals = false) {
+	const { firstOperand, operator, secondOperand } = expression;
+	const convertedOperator = convertOperator(operator);
+
+	const text = equals
+		? `${firstOperand} ${convertedOperator} ${secondOperand} =`
+		: `${firstOperand} ${convertedOperator}`;
+
+	lastOperationDisplay.textContent = text.trim();
+}
+
+function updateCurrentOperationDisplay(text = "") {
+	currentOperationDisplay.textContent = text || "0";
 }
 
 function activateButtonFromKey(value) {
@@ -191,4 +218,8 @@ function activateButtonFromKey(value) {
 function activateButton(button) {
 	button.classList.add("active");
 	setTimeout(() => button.classList.remove("active"), 100);
+}
+
+function convertOperator(operator) {
+	return operatorMap[operator] || operator;
 }
