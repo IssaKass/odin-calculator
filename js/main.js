@@ -1,3 +1,4 @@
+import { convertOperator } from "./format.js";
 import { operate, round } from "./operations.js";
 
 /**
@@ -14,12 +15,6 @@ const calculatorBody = document.querySelector(".calculator__body");
  */
 const OPERATORS = ["+", "-", "*", "/"];
 const MAX_LENGTH = Number.MAX_SAFE_INTEGER.toFixed().length;
-const operatorMap = {
-	"+": "+",
-	"-": "-",
-	"*": "x",
-	"/": "÷",
-};
 
 const expression = {
 	firstOperand: "",
@@ -318,13 +313,4 @@ function activateButton(button) {
 function activateButtonFromKey(value) {
 	const button = document.querySelector(`[data-value="${value}"]`);
 	if (button) activateButton(button);
-}
-
-/**
- * Converts an operator symbol for display.
- * @param {string} operator - The operator to convert.
- * @returns {string} The converted operator.
- */
-function convertOperator(operator) {
-	return operatorMap[operator] || operator;
 }
