@@ -111,7 +111,7 @@ function processInput(value) {
  */
 function handleNumber(digit) {
 	if (shouldResetScreen) {
-		resetCalculator();
+		handleClear();
 		shouldResetScreen = false;
 	}
 
