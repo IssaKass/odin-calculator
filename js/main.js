@@ -250,6 +250,11 @@ function evaluateExpression() {
  * Handles backspace input.
  */
 function handleBackspace() {
+	if (shouldResetScreen) {
+		handleClear();
+		shouldResetScreen = false;
+	}
+
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateBackspace(expression[targetOperand]);
 	updateCurrentOperationDisplay(expression[targetOperand]);
