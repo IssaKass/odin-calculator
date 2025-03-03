@@ -56,15 +56,6 @@ You can view and use the live calculator by clicking the link below:
 - **Icons Used**:
   - [FontAwesome](https://fontawesome.com/)
 
-## 📂 Project Structure
-
-```
-/odin-calculator
-|── index.html
-|── style.css
-|── main.js
-```
-
 ## 🚀 How to Use
 
 1. Click on the number and operator buttons to input a calculation.
