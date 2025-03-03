@@ -13,8 +13,51 @@ const calculatorBody = document.querySelector(".calculator__body");
 /**
  * State Variables
  */
-const OPERATORS = ["+", "-", "*", "/"];
 const MAX_LENGTH = Number.MAX_SAFE_INTEGER.toFixed().length;
+const INPUT_HANDLERS = {
+	0: handleNumber,
+	1: handleNumber,
+	2: handleNumber,
+	3: handleNumber,
+	4: handleNumber,
+	5: handleNumber,
+	6: handleNumber,
+	7: handleNumber,
+	8: handleNumber,
+	9: handleNumber,
+	".": handleDecimalPoint,
+	negate: handleNegation,
+	"+": handleOperator,
+	"-": handleOperator,
+	"*": handleOperator,
+	"/": handleOperator,
+	"=": handleEvaluation,
+	clear: handleClear,
+	backspace: handleBackspace,
+};
+const KEYBOARD_MAP = {
+	0: "0",
+	1: "1",
+	2: "2",
+	3: "3",
+	4: "4",
+	5: "5",
+	6: "6",
+	7: "7",
+	8: "8",
+	9: "9",
+	".": ".",
+	"+": "+",
+	"-": "-",
+	"*": "*",
+	"/": "/",
+	"=": "=",
+	Enter: "=",
+	Backspace: "backspace",
+	Escape: "clear",
+	c: "clear",
+	C: "clear",
+};
 
 const expression = {
 	firstOperand: "",
@@ -31,54 +74,34 @@ document.addEventListener("DOMContentLoaded", handleClear);
 calculatorBody.addEventListener("click", function (event) {
 	const button = event.target.closest("BUTTON");
 	if (button) {
-		handleButtonClick(button.dataset.value);
+		processInput(button.dataset.value);
 		activateButton(button);
 		button.blur();
 	}
 });
 
-window.addEventListener("keydown", handleKeyboardInput);
+window.addEventListener("keydown", function (event) {
+	let value = KEYBOARD_MAP[event.key];
+
+	// Handle Alt + Minus for negation separately
+	if (event.altKey && event.key === "-") {
+		value = "negate";
+	}
+
+	if (value) {
+		processInput(value);
+		activateButtonFromKey(value);
+	}
+});
 
 /**
- * Handles button clicks and directs input accordingly.
- * @param {string} value - The value of the button pressed.
+ * Processes input based on the mapped handlers.
+ * @param {string} value - The button value.
  */
-function handleButtonClick(value) {
-	if (!isNaN(value)) handleNumber(value);
-	else if (value === ".") handleDecimalPoint();
-	else if (value === "negate") handleNegation();
-	else if (OPERATORS.includes(value)) handleOperator(value);
-	else if (value === "=") handleEvaluation();
-	else if (value === "clear") handleClear();
-	else if (value === "backspace") handleBackspace();
-}
-
-/**
- * Handles keyboard input and maps it to calculator functions.
- * @param {KeyboardEvent} event - The keyboard event.
- */
-function handleKeyboardInput(event) {
-	if (event.key >= 0 && event.key <= 9) {
-		handleButtonClick(event.key);
-		activateButtonFromKey(event.key);
-	} else if (event.key === ".") {
-		handleButtonClick(event.key);
-		activateButtonFromKey(".");
-	} else if (event.altKey && event.code === "Minus") {
-		handleButtonClick("negate");
-		activateButtonFromKey("negate");
-	} else if (OPERATORS.includes(event.key)) {
-		handleButtonClick(event.key);
-		activateButtonFromKey(event.key);
-	} else if (event.key === "=" || event.key === "Enter") {
-		handleButtonClick("=");
-		activateButtonFromKey("=");
-	} else if (event.key === "Escape" || event.key === "c" || event.key === "C") {
-		handleButtonClick("clear");
-		activateButtonFromKey("clear");
-	} else if (event.key === "Backspace") {
-		handleButtonClick("backspace");
-		activateButtonFromKey("backspace");
+function processInput(value) {
+	const handler = INPUT_HANDLERS[value];
+	if (handler) {
+		handler(value);
 	}
 }
 
