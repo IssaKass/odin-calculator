@@ -1,13 +1,17 @@
 import { operate, round } from "./operations.js";
 
-// ---- DOM Elements ----
+/**
+ * DOM Elements
+ */
 const lastOperationDisplay = document.querySelector(".last-operation__display");
 const currentOperationDisplay = document.querySelector(
 	".current-operation__display"
 );
 const calculatorBody = document.querySelector(".calculator__body");
 
-// ---- Constants ----
+/**
+ * State Variables
+ */
 const OPERATORS = ["+", "-", "*", "/"];
 const MAX_LENGTH = Number.MAX_SAFE_INTEGER.toFixed().length;
 const operatorMap = {
@@ -24,7 +28,9 @@ const expression = {
 };
 let shouldResetScreen = false;
 
-// ---- Event Listeners ----
+/**
+ * Event Listeners
+ */
 document.addEventListener("DOMContentLoaded", handleClear);
 
 calculatorBody.addEventListener("click", function (event) {
@@ -38,7 +44,10 @@ calculatorBody.addEventListener("click", function (event) {
 
 window.addEventListener("keydown", handleKeyboardInput);
 
-// ---- Handle Button Click ----
+/**
+ * Handles button clicks and directs input accordingly.
+ * @param {string} value - The value of the button pressed.
+ */
 function handleButtonClick(value) {
 	if (!isNaN(value)) handleNumber(value);
 	else if (value === ".") handleDecimalPoint();
@@ -49,7 +58,10 @@ function handleButtonClick(value) {
 	else if (value === "backspace") handleBackspace();
 }
 
-// ---- Handle Keyboard Input ----
+/**
+ * Handles keyboard input and maps it to calculator functions.
+ * @param {KeyboardEvent} event - The keyboard event.
+ */
 function handleKeyboardInput(event) {
 	if (event.key >= 0 && event.key <= 9) {
 		handleButtonClick(event.key);
@@ -75,6 +87,10 @@ function handleKeyboardInput(event) {
 	}
 }
 
+/**
+ * Handles numeric input.
+ * @param {string} digit - The digit pressed.
+ */
 function handleNumber(digit) {
 	if (shouldResetScreen) {
 		resetCalculator();
@@ -86,6 +102,12 @@ function handleNumber(digit) {
 	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
+/**
+ * Updates operand value while preventing excessive length.
+ * @param {string} currentOperand - The current operand value.
+ * @param {string} digit - The new digit to add.
+ * @returns {string} The updated operand.
+ */
 function updateOperand(currentOperand, digit) {
 	if (currentOperand.length === MAX_LENGTH) return currentOperand;
 
@@ -96,6 +118,9 @@ function updateOperand(currentOperand, digit) {
 	return currentOperand + digit;
 }
 
+/**
+ * Handles decimal point input.
+ */
 function handleDecimalPoint() {
 	if (shouldResetScreen) {
 		handleClear();
@@ -107,6 +132,9 @@ function handleDecimalPoint() {
 	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
+/**
+ * Ensures valid decimal point placement.
+ */
 function updateDecimal(currentOperand) {
 	// Add leading zero if operand is initially empty.
 	if (currentOperand === "") return "0.";
@@ -118,12 +146,18 @@ function updateDecimal(currentOperand) {
 	return currentOperand + ".";
 }
 
+/**
+ * Handles negation of the current operand.
+ */
 function handleNegation() {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateNegation(expression[targetOperand]);
 	updateCurrentOperationDisplay(expression[targetOperand]);
 }
 
+/**
+ * Toggles negation.
+ */
 function updateNegation(currentOperand) {
 	if (currentOperand === "") return "";
 
@@ -136,6 +170,9 @@ function updateNegation(currentOperand) {
 	return currentOperand === "-0" ? "0" : currentOperand;
 }
 
+/**
+ * Handles operator input.
+ */
 function handleOperator(currentOperator) {
 	if (expression.firstOperand === "") return;
 
@@ -150,6 +187,9 @@ function handleOperator(currentOperator) {
 	expression.operator = currentOperator;
 }
 
+/**
+ * Handles evaluation of the expression.
+ */
 function handleEvaluation() {
 	if (
 		expression.firstOperand === "" ||
@@ -162,6 +202,9 @@ function handleEvaluation() {
 	evaluateExpression();
 }
 
+/**
+ * Evaluates the current expression.
+ */
 function evaluateExpression() {
 	try {
 		const result = round(
@@ -185,6 +228,9 @@ function evaluateExpression() {
 	}
 }
 
+/**
+ * Handles backspace input.
+ */
 function handleBackspace() {
 	let targetOperand = !expression.operator ? "firstOperand" : "secondOperand";
 	expression[targetOperand] = updateBackspace(expression[targetOperand]);
@@ -199,6 +245,9 @@ function updateBackspace(currentOperand) {
 	return currentOperand === "-" ? "" : currentOperand;
 }
 
+/**
+ * Resets the calculator.
+ */
 function handleClear() {
 	resetCalculator();
 	clearLastOperationDisplay();
@@ -206,12 +255,20 @@ function handleClear() {
 	shouldResetScreen = false;
 }
 
+/**
+ * Resets the calculator expression.
+ */
 function resetCalculator() {
 	expression.firstOperand = "";
 	expression.operator = "";
 	expression.secondOperand = "";
 }
 
+/**
+ * Updates the last operation display.
+ * @param {Object} expression - The current expression.
+ * @param {boolean} [equals=false] - Whether to display the equals sign.
+ */
 function updateLastOperationDisplay(expression, equals = false) {
 	const { firstOperand, operator, secondOperand } = expression;
 	const convertedOperator = convertOperator(operator);
@@ -223,28 +280,51 @@ function updateLastOperationDisplay(expression, equals = false) {
 	lastOperationDisplay.textContent = text.trim();
 }
 
+/**
+ * Clears the last operation display.
+ */
 function clearLastOperationDisplay() {
 	lastOperationDisplay.textContent = "";
 }
 
+/**
+ * Updates the current operation display.
+ * @param {string} [text=""] - The text to display.
+ */
 function updateCurrentOperationDisplay(text = "") {
 	currentOperationDisplay.textContent = text || "0";
 }
 
+/**
+ * Clears the current operation display.
+ */
 function clearCurrentOperationDisplay() {
 	currentOperationDisplay.textContent = "0";
 }
 
-function activateButtonFromKey(value) {
-	const button = document.querySelector(`[data-value="${value}"]`);
-	if (button) activateButton(button);
-}
-
+/**
+ * Adds an active class to a button temporarily.
+ * @param {HTMLElement} button - The button to activate.
+ */
 function activateButton(button) {
 	button.classList.add("active");
 	setTimeout(() => button.classList.remove("active"), 100);
 }
 
+/**
+ * Activates a button based on a key press.
+ * @param {string} value - The button value.
+ */
+function activateButtonFromKey(value) {
+	const button = document.querySelector(`[data-value="${value}"]`);
+	if (button) activateButton(button);
+}
+
+/**
+ * Converts an operator symbol for display.
+ * @param {string} operator - The operator to convert.
+ * @returns {string} The converted operator.
+ */
 function convertOperator(operator) {
 	return operatorMap[operator] || operator;
 }
